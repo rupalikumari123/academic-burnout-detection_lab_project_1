@@ -12,16 +12,16 @@ def predict_burnout(study, sleep, stress, assignment, attendance):
 
         score = max(0, score)
 
-        # Classification
+        # Burnout Level Conditions
         if score < 33:
-            level = 0   # Low
+            level = "Low"
         elif score < 66:
-            level = 1   # Medium
+            level = "Medium"
         else:
-            level = 2   # High
+            level = "High"
 
-        return level, score
+        return score, level
 
     except Exception as e:
         print("Prediction Error:", e)
-        return 0, 0
+        return 0, "Low"
