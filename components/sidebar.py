@@ -18,7 +18,4 @@ Technologies:
     )
 
     st.sidebar.markdown("---")
-    st.sidebar.write("👨‍💻 Developed by : Rupali kumari" \
-    ,Aparna Sethi
-Sonalika Prusty
-Ankita Kumar Mishra")
+    st.sidebar.write("👨‍💻 Developed by CSE Students")
