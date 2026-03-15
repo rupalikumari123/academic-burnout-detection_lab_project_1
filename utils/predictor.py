@@ -1,34 +1,27 @@
-# import pickle
-# import numpy as np
-
-# # Load trained model
-# model = pickle.load(open("burnout_model.pkl", "rb"))
-
-# def predict_burnout(study_hours, sleep_hours, stress_level):
-
-#     # Model expects 3 features
-#     data = np.array([[study_hours, sleep_hours, stress_level]])
-
-#     prediction = model.predict(data)
-
-#     return prediction[0]
-
-
-
-
-import pickle
-import numpy as np
-
-# Load Model
-model = pickle.load(open("burnout_model.pkl", "rb"))
-
-def predict_burnout(study, sleep, stress):
+def predict_burnout(study, sleep, stress, assignment, attendance):
 
     try:
-        features = np.array([[study, sleep, stress]])
-        prediction = model.predict(features)
-        return prediction[0]
+        # Burnout Score Formula
+        score = (
+            study * 4 +
+            stress * 6 +
+            assignment * 4 -
+            sleep * 2 -
+            attendance * 0.3
+        )
+
+        score = max(0, score)
+
+        # Classification
+        if score < 33:
+            level = 0   # Low
+        elif score < 66:
+            level = 1   # Medium
+        else:
+            level = 2   # High
+
+        return level, score
 
     except Exception as e:
         print("Prediction Error:", e)
-        return 0
+        return 0, 0

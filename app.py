@@ -1,67 +1,13 @@
-# import streamlit as st
-# from utils.predictor import predict_burnout
-# from components.suggestions import show_suggestions
-# from components.sidebar import show_sidebar
-
-# # Page settings
-# st.set_page_config(page_title="Academic Burnout Detection", page_icon="📚")
-
-# # Title
-# st.title("📚 Academic Burnout Detection System")
-
-# # Sidebar
-# show_sidebar()
-
-# # Input section
-# st.subheader("Enter Student Details")
-
-# study_hours = st.slider("Study Hours per day", 0, 12, 5)
-# sleep_hours = st.slider("Sleep Hours per day", 0, 12, 7)
-# stress_level = st.slider("Stress Level (1-10)", 1, 10, 5)
-
-# # Extra inputs (not used in prediction)
-# assignment_load = st.slider("Assignment Load (1-10)", 1, 10, 5)
-# screen_time = st.slider("Screen Time (hours)", 0, 12, 4)
-
-# # Prediction button
-# if st.button("Predict Burnout"):
-
-#     # Send only 3 inputs to model
-#     prediction = predict_burnout(
-#         study_hours,
-#         sleep_hours,
-#         stress_level
-#     )
-
-#     # Show result
-#     if prediction == 0:
-#         st.success("Low Burnout 😊")
-
-#     elif prediction == 1:
-#         st.warning("Moderate Burnout ⚠️")
-
-#     else:
-#         st.error("High Burnout 🚨")
-
-#     # Show suggestions
-#     show_suggestions(prediction)
-
-
-
-
 import streamlit as st
 import pandas as pd
 from utils.predictor import predict_burnout
 from components.suggestions import show_suggestions
 from components.sidebar import show_sidebar
 
-# Page Config
 st.set_page_config(page_title="Academic Burnout Detection", page_icon="📚")
 
-# Title
 st.title("📚 Academic Burnout Detection System")
 
-# Sidebar
 show_sidebar()
 
 # Student Name
@@ -72,44 +18,43 @@ st.subheader("Enter Student Details")
 study_hours = st.slider("Study Hours per day", 0, 12, 5)
 sleep_hours = st.slider("Sleep Hours per day", 0, 12, 7)
 stress_level = st.slider("Stress Level (1-10)", 1, 10, 5)
-
 assignment_load = st.slider("Assignment Load (1-10)", 1, 10, 5)
 attendance = st.slider("Attendance Percentage", 0, 100, 75)
 
 # Prediction
 if st.button("Predict Burnout"):
 
-    prediction = predict_burnout(
+    level, burnout_score = predict_burnout(
         study_hours,
         sleep_hours,
-        stress_level
+        stress_level,
+        assignment_load,
+        attendance
     )
 
-    # Result Display
     st.subheader(f"Result for {name if name else 'Student'}")
 
-    if prediction == 0:
+    # Result Display
+    if level == 0:
         st.success("Low Burnout 😊")
-    elif prediction == 1:
-        st.warning("Burnout level-Moderate ⚠️")
+    elif level == 1:
+        st.warning("Moderate Burnout ⚠️")
     else:
         st.error("High Burnout 🚨")
 
-    # Burnout Score
-    burnout_score = (stress_level * 10) - (sleep_hours * 2) + (study_hours * 2)
-    burnout_score = max(0, min(100, burnout_score))
-
+    # Score Meter
     st.subheader("Burnout Score")
-    st.progress(burnout_score / 100)
-    st.metric("Burnout Score", f"{burnout_score}%")
+    percent = min(100, burnout_score)
+    st.progress(percent / 100)
+    st.metric("Burnout Score", f"{percent:.2f}")
 
-    # Chart Visualization
+    # Chart
     data = pd.DataFrame({
         "Category": [
             "Study Hours",
             "Sleep Hours",
             "Stress Level",
-            "Assignments",
+            "Assignment Load",
             "Attendance"
         ],
         "Value": [
@@ -117,7 +62,7 @@ if st.button("Predict Burnout"):
             sleep_hours,
             stress_level,
             assignment_load,
-             attendance
+            attendance
         ]
     })
 
@@ -125,7 +70,7 @@ if st.button("Predict Burnout"):
     st.bar_chart(data.set_index("Category"))
 
     # Suggestions
-    show_suggestions(prediction)
+    show_suggestions(level)
 
     # Download Report
     report = f"""
@@ -136,9 +81,11 @@ Student Name: {name}
 Study Hours: {study_hours}
 Sleep Hours: {sleep_hours}
 Stress Level: {stress_level}
+Assignment Load: {assignment_load}
+Attendance: {attendance}
 
-Burnout Score: {burnout_score}%
-Prediction Level: {prediction}
+Burnout Score: {burnout_score:.2f}
+Burnout Level: {['Low','Medium','High'][level]}
 """
 
     st.download_button(
