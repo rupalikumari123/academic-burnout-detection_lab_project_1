@@ -117,7 +117,7 @@ if st.button("Predict Burnout"):
             sleep_hours,
             stress_level,
             assignment_load,
-            screen_time
+            # screen_time
         ]
     })
 
