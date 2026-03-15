@@ -74,7 +74,7 @@ sleep_hours = st.slider("Sleep Hours per day", 0, 12, 7)
 stress_level = st.slider("Stress Level (1-10)", 1, 10, 5)
 
 assignment_load = st.slider("Assignment Load (1-10)", 1, 10, 5)
-# screen_time = st.slider("Screen Time (hours)", 0, 12, 4)
+Attendance = st.slider("Attendance", 0, 12, 4)
 
 # Prediction
 if st.button("Predict Burnout"):
@@ -91,7 +91,7 @@ if st.button("Predict Burnout"):
     if prediction == 0:
         st.success("Low Burnout 😊")
     elif prediction == 1:
-        st.warning("Burnout level-Moderate Burnout ⚠️")
+        st.warning("Burnout level-Moderate ⚠️")
     else:
         st.error("High Burnout 🚨")
 
@@ -110,14 +110,14 @@ if st.button("Predict Burnout"):
             "Sleep Hours",
             "Stress Level",
             "Assignments",
-            # "Screen Time"
+            "Attendance"
         ],
         "Value": [
             study_hours,
             sleep_hours,
             stress_level,
             assignment_load,
-            # screen_time
+             attendance
         ]
     })
 
