@@ -8,11 +8,13 @@ def show_sidebar():
         """
 Academic Burnout Detection System
 
-Rule-based AI system predicting burnout
-using study habits and lifestyle factors.
+This AI system predicts student burnout
+based on study habits, sleep, stress level,
+assignment load, and attendance.
 
-Technologies:
+Technologies Used:
 • Python
+• Machine Learning
 • Streamlit
 """
     )
