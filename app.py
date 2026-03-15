@@ -74,7 +74,7 @@ sleep_hours = st.slider("Sleep Hours per day", 0, 12, 7)
 stress_level = st.slider("Stress Level (1-10)", 1, 10, 5)
 
 assignment_load = st.slider("Assignment Load (1-10)", 1, 10, 5)
-Attendance = st.slider("Attendance", 0, 12, 4)
+attendance = st.slider("Attendance Percentage", 0, 100, 75)
 
 # Prediction
 if st.button("Predict Burnout"):
