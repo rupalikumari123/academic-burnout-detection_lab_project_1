@@ -35,7 +35,7 @@ def show_suggestions(level):
 
     elif level == 1:
         st.write("⚠️ Take regular study breaks")
-        st.write("⚠️ Reduce screen time")
+        # st.write("⚠️ Reduce screen time")
         st.write("⚠️ Practice meditation or exercise")
         st.write("⚠️ Improve sleep schedule")
 
