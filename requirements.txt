@@ -1,0 +1,9 @@
+# streamlit
+# numpy
+# scikit-learn
+
+
+streamlit
+numpy
+pandas
+scikit-learn
