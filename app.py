@@ -48,12 +48,12 @@ if st.button("Predict Burnout"):
         st.error("Burnout level-High 🚨")
 
     # Burnout Score Visualization
-    st.subheader("Burnout Score")
+    # st.subheader("Burnout Score")
 
     percent = min(100, burnout_score)
 
-    st.progress(percent / 100)
-    st.metric("Burnout Score", f"{percent:.2f}")
+    # st.progress(percent / 100)
+    # st.metric("Burnout Score", f"{percent:.2f}")
 
     # Chart visualization
     data = pd.DataFrame({
