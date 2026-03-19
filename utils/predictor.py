@@ -1,24 +1,22 @@
 def predict_burnout(study, sleep, stress, assignment, attendance):
 
     try:
-        # Burnout Score Formula
-        score = (
-            study * 4 +
-            stress * 6 +
-            assignment * 4 -
-            sleep * 2 -
-            attendance * 0.3
-        )
+        # Rule-based burnout prediction (NO formula)
 
-        score = max(0, score)
-
-        # Burnout Level Conditions
-        if score < 33:
-            level = "Low"
-        elif score < 66:
-            level = "Medium"
-        else:
+        # High burnout condition
+        if stress >= 8 or sleep <= 4 or assignment >= 8:
             level = "High"
+            score = 80
+
+        # Medium burnout condition
+        elif stress >= 5 or sleep <= 6 or assignment >= 5:
+            level = "Medium"
+            score = 50
+
+        # Low burnout condition
+        else:
+            level = "Low"
+            score = 20
 
         return score, level
 
